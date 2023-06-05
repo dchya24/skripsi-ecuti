@@ -4,7 +4,7 @@
 <nav id="sidebar" class="sidebar-wrapper">
   <div class="sidebar-content">
     <div class="sidebar-brand">
-      <a href="#">DLH DKI Jakarta</a>
+      <a href="#">E-Cuti</a>
       <div id="close-sidebar">
         <i class="fas fa-times"></i>
       </div>
@@ -28,19 +28,53 @@
     <!-- sidebar-header  -->
     <div class="sidebar-menu">
       <ul>
-        <li class="header-menu">
-          <a href="">
+        <li class="header-menu @if($sidebar_menu === 'dashboard') active @endif">
+          <a href="{{ route('dashboard')}}">
             <i class="fas fa-home"></i>
             Dashboard
           </a>
         </li>
-        <li class="header-menu">
-          <a href="">
+        <li class="sidebar-dropdown @if($sidebar_menu === 'cuti') active @endif">
+          <a href="#">
             <i class="fas fa-calendar-week"></i>
-            Perizinan Cuti
+            Cuti
           </a>
+          <div class="sidebar-submenu" @if($sidebar_menu === 'cuti') style="display: block;" @endif>
+            <ul>
+              <li @if($sidebar_submenu === 'cuti.add') class="active" @endif>
+                <a href="{{ route('cuti.add') }}">Buat Perizinan</a>
+              </li>
+              <li @if($sidebar_submenu === 'cuti.index') class="active" @endif>
+                <a href="{{route('cuti.index')}}">Riwayat Perizinan</a>
+              </li>
+            </ul>
+          </div>
         </li>
         <li class="sidebar-dropdown">
+          <a href="#">
+            <i class="fas fa-tasks"></i>
+            Approval Cuti Pegawai
+          </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="#">Approval Atasan</a>
+              </li>
+              <li>
+                <a href="#">Approval Pejabat</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        
+        <li class="header-menu">
+          <a href="">
+            <i class="fas fa-address-book"></i>
+            Kelola Pegawai
+          </a>
+        </li>
+        
+        {{-- <li class="sidebar-dropdown">
           <a href="#">
             <i class="fa fa-tachometer-alt"></i>
             <span>Dashboard</span>
@@ -61,7 +95,7 @@
               </li>
             </ul>
           </div>
-        </li>
+        </li> --}}
       </ul>
     </div>
     <!-- sidebar-menu  -->
