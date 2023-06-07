@@ -16,9 +16,12 @@ return new class extends Migration
         Schema::create('sub_bagian', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->unsignedBigInteger('bagian_id');
+            $table->unsignedBigInteger('bagian_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            
+            $table->foreign('bagian_id')->references('id')->on('bagian')
+            ->onDelete('SET NULL')->onUpdate('CASCADE');
         });
     }
 
@@ -29,6 +32,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_bagians');
+        Schema::table('sub_bagian', function(Blueprint $table){
+            $table->dropForeign('jabatan_rumpun_jabatan_id_foreign');
+        });
+        Schema::dropIfExists('sub_bagian');
     }
 };

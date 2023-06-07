@@ -16,10 +16,15 @@ return new class extends Migration
         Schema::create('jabatan', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->unsignedBigInteger('rumpun_jabatan_id');
-            $table->unsignedBigInteger('sub_bagian_id');
+            $table->unsignedBigInteger('rumpun_jabatan_id')->nullable();
+            $table->unsignedBigInteger('subbagian_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('rumpun_jabatan_id')->references('id')->on('rumpun_jabatan')
+                    ->onDelete('SET NULL')->onUpdate('CASCADE');
+            $table->foreign('subbagian_id')->references('id')->on('sub_bagian')
+                    ->onDelete('SET NULL')->onUpdate('CASCADE');
         });
     }
 
@@ -30,6 +35,11 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jabatans');
+        
+        Schema::table('jabatan', function(Blueprint $table){
+            $table->dropForeign('jabatan_rumpun_jabatan_id_foreign');
+            $table->dropForeign('jabatan_subbagian_id_foreign');
+        });
+        Schema::dropIfExists('jabatan');
     }
 };

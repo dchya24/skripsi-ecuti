@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('gelar_depan');
             $table->string('gelar_belakang');
+            $table->unsignedBigInteger('jabatan_id')->nullable();
             $table->string('password');
             $table->date('tgl_lahir');
             $table->string('tempat_lahir');

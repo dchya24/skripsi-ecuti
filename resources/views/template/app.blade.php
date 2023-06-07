@@ -9,6 +9,8 @@
   <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker3.min.css">
   <link rel="stylesheet" href="{{asset('css/template.css')}}">
+  <link rel="icon" type="image/x-icon" href="{{asset('img/logo-dlh-small.png')}}">
+
 </head>
 <body class="page-wrapper chiller-theme toggled">
 

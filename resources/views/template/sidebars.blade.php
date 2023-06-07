@@ -4,7 +4,10 @@
 <nav id="sidebar" class="sidebar-wrapper">
   <div class="sidebar-content">
     <div class="sidebar-brand">
-      <a href="#">E-Cuti</a>
+      <a href="#">
+        <img src="{{asset('img/logo-dlh-small.png')}}" alt="Logo DLH DKI" class="img-fluid mr-1" style="width: 32px;">
+        E-Cuti
+      </a>
       <div id="close-sidebar">
         <i class="fas fa-times"></i>
       </div>
@@ -67,11 +70,21 @@
           </div>
         </li>
         
-        <li class="header-menu">
-          <a href="">
+        <li class="sidebar-dropdown">
+          <a href="#">
             <i class="fas fa-address-book"></i>
-            Kelola Pegawai
+            Administrator
           </a>
+          <div class="sidebar-submenu">
+            <ul>
+              <li>
+                <a href="#">Kelola Pegawai</a>
+              </li>
+              <li>
+                <a href="#">Kelola Jabatan</a>
+              </li>
+            </ul>
+          </div>
         </li>
         
         {{-- <li class="sidebar-dropdown">

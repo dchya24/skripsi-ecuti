@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('perizinan_cuti', function (Blueprint $table){
+        Schema::create('catatan_cuti', function (Blueprint $table){
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->integer('jumlah_cuti_tahunan');
             $table->integer('sisa_cuti_tahunan');
             $table->integer('cuti_tahunan_terpakai');
@@ -25,6 +25,9 @@ return new class extends Migration
             $table->date('tahun');
             $table->timestamps();
             $table->softDeletes();
+                                
+            $table->foreign('user_id')->references('id')->on('users')
+            ->onDelete('SET NULL')->onUpdate('CASCADE');
         });
     }
 
@@ -35,6 +38,9 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('catatan_cuti', function(Blueprint $table){
+            $table->dropForeign('catatan_cuti_user_id_foreign');
+        });
+        Schema::dropIfExists('catatan_cuti');
     }
 };
