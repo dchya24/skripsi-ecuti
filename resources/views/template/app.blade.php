@@ -24,13 +24,16 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-item">
-            Hello, Ria Lantasih
+            Hello, {{Auth::user()->nama}}
           </div>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-sign-out-alt"></i>
-            Logout
-          </a>
+          <form action="{{route('logout')}}" method="POST" class="form">
+            @csrf
+            <button type="submit" class="btn btn-light dropdown-item">
+              <i class="fas fa-sign-out-alt"></i>
+              Logout
+            </button>
+          </form>
       </li>
     </ul>
   </nav>

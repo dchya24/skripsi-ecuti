@@ -19,9 +19,9 @@
       </div> --}}
       <div class="user-info px-2">
         <span class="user-name">
-          <strong>Ria Lantasih</strong>
+          <strong>{{ Auth::user()->full_name }}</strong>
         </span>
-        <span class="user-role">Pengembangan Peran Serta Masyarakat</span>
+        <span class="user-role">{{Auth::user()->jabatan->nama}}</span>
         {{-- <span class="user-status">
           <i class="fa fa-circle"></i>
           <span>Online</span>

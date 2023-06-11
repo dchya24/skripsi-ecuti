@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,13 +16,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [DashboardController::class, 'dashboardPage'])->name('dashboard');
+Route::middleware('auth')->group(function() {
+    Route::get('/', function(){
+        return redirect()->route('dashboard');
+    });
+    Route::get('/home', function(){
+        return redirect()->route('dashboard');
+    });
 
-Route::prefix('cuti')->group(function(){
-    Route::get("", [CutiController::class, "index"])->name('cuti.index');
-    Route::get("/tambah", [CutiController::class, "showCreatePage"])->name('cuti.add');
+    Route::get('/dashboard', [DashboardController::class, 'dashboardPage'])->name('dashboard');
+    Route::prefix('cuti')->group(function(){
+        Route::get("", [CutiController::class, "index"])->name('cuti.index');
+        Route::get("/tambah", [CutiController::class, "showCreatePage"])->name('cuti.add');
+    });
+
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('login', function(){
-    return view('auth.login');
+Route::middleware('guest')->group(function(){
+    Route::post('login', [LoginController::class, "login"])->name('login');
+    Route::get('login', [LoginController::class, "loginView"]);
 });
