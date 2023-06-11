@@ -41,4 +41,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getFullNameAttribute(){
+        $gelar_belakang = $this->gelar_belakang ? ', ' . $this->gelar_belakang : '';
+        $fullname = $this->gelar_depan . ' ' . $this->nama . $gelar_belakang;
+
+        return trim($fullname);
+    }
+
+    public function jabatan(){
+        return $this->belongsTo(jabatan::class, 'jabatan_id');
+    }
 }

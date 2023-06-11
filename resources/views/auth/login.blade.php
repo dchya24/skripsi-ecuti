@@ -19,20 +19,21 @@
             Login
           </div>
           <div class="card-body">
-            <form>
+            <form method="POST" action="{{route('login')}}">
               <div class="form-group row">
                 <label for="username" class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="username" placeholder="Email atau NIP" name="password">
+                  <input type="text" class="form-control" id="username" placeholder="Email atau NIP" name="email" required>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="password" class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-9">
-                  <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="password" required>
                 </div>
               </div>
               <div class="form-group justify-content-end">
+                @csrf
                 <button type="submit" class="btn btn-primary">Login</button>
               </div>
             </form>
