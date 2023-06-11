@@ -35,6 +35,9 @@ jQuery(function ($) {
       .parent()
       .addClass("active");
   }
+
+  $('[data-toggle="tooltip"]').tooltip()
+
 });
 
 $("#close-sidebar").click(function() {

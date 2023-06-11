@@ -12,30 +12,20 @@
         <thead>
           <tr>
             <td>Tahun</td>
-            <td>Jumlah</td>
             <td>Terpakai</td>
             <td>Sisa</td>
+            <td>Jumlah</td>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>2023</td>
-            <td>12</td>
-            <td>3</td>
-            <td>9</td>
-          </tr>
-          <tr>
-            <td>2022</td>
-            <td>12</td>
-            <td>8</td>
-            <td>4</td>
-          </tr>
-          <tr>
-            <td>2021</td>
-            <td>12</td>
-            <td>10</td>
-            <td>2</td>
-          </tr>
+          @foreach($catatanCuti as $catatan)
+              <tr>
+                <td>{{$catatan->tahun}}</td>
+                <td>{{$catatan->cuti_tahunan_terpakai}}</td>
+                <td>{{$catatan->sisa_cuti_tahunan}}</td>
+                <td>{{$catatan->jumlah_cuti_tahunan}}</td>
+              </tr>
+          @endforeach
         </tbody>
       </table>
     </div>
@@ -43,13 +33,13 @@
     <div class="col-md-12">
       <h6 class="pt-2 border-top">Atasan Langsung</h6>
       <table class="table table-borderless">
-        <tr>
-          <td>Nama</td>
-          <td>Ria Lantasih</td>
+        <tr class="d-flex">
+          <td class="col-3">Nama</td>
+          <td class="col-4">{{$atasanLangsung->full_name}}</td>
         </tr>
-        <tr>
-          <td>Jabatan</td>
-          <td>Pengembangan Peran Serta Masyarakat</td>
+        <tr class="d-flex">
+          <td class="col-3">Jabatan</td>
+          <td class="col-4">{{$atasanLangsung->jabatan->nama}}</td>
         </tr>
       </table>
     </div>
@@ -57,13 +47,13 @@
     <div class="col-md-12">
       <h6 class="pt-2 border-top">Pejabat Berwenang</h6>
       <table class="table table-borderless">
-        <tr>
-          <td>Nama</td>
-          <td>Ria Lantasih</td>
+        <tr class="d-flex">
+          <td class="col-3">Nama</td>
+          <td class="col-4">{{getFullName($pejabatBerwenang->gelar_depan, $pejabatBerwenang->nama, $pejabatBerwenang->gelar_belakang)}}</td>
         </tr>
-        <tr>
-          <td>Jabatan</td>
-          <td>Pengembangan Peran Serta Masyarakat</td>
+        <tr class="d-flex">
+          <td class="col-3">Jabatan</td>
+          <td class="col-4">{{$pejabatBerwenang->jabatan}}</td>
         </tr>
       </table>
     </div>

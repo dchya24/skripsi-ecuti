@@ -1,6 +1,16 @@
 @extends('template.app')
-@section('title', 'welcome!')
+@section('title', 'Pengajuan Cuti')
 @section('content')
+  @if($errors->any())
+    @foreach ($errors->all(0) as $error)
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{$error}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    @endforeach
+  @endif
   <h5>Perizinan Cuti</h5>
 
   <h6 class="border-bottom mt-2 py-3">Data Pegawai</h6>
@@ -21,45 +31,41 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>2023</td>
-              <td>12</td>
-            </tr>
-            <tr>
-              <td>2022</td>
-              <td>4</td>
-            </tr>
-            <tr>
-              <td>2021</td>
-              <td>3</td>
-            </tr>
+            @foreach ($catatanCuti as $item)
+                <tr>
+                  <td>{{$item->tahun}}</td>
+                  <td>{{$item->sisa_cuti_tahunan}}</td>
+                </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
     </div>
     <div class="row">
       <div class="col-md-2">Cuti Sakit</div>
+      <div class="col-md-3">{{$catatanCuti[0]->jumlah_cuti_sakit}}</div>
     </div>
     <div class="row">
       <div class="col-md-2">Cuti Besar</div>
+      <div class="col-md-3">{{$catatanCuti[0]->jumlah_cuti_besar}}</div>
     </div>
     <div class="row">
       <div class="col-md-2">Cuti Alasan Penting</div>
+      <div class="col-md-3">{{$catatanCuti[0]->jumlah_alasan_penting}}</div>
     </div>
   </div>
 
   <div class="mt-2 py-2">
     <h6 class="py-3 border-bottom">Form Perizinan</h6>
-    <form class="pt-4" method="POST">
+    <form class="pt-4" method="POST" action="{{route('cuti.add.action')}}">
       <div class="form-group row">
         <label for="jenis_cuti" class="col-md-2 col-form-label">Jenis Cuti</label>
         <div class="col-md-8">
           <select class="form-control" id="jenis_cuti" name="jenis_cuti" required>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <option value="">-</option>
+            @foreach ($optionsJenisCuti as $key => $option)
+                <option value="{{$key}}">{{$option}}</option>
+            @endforeach
           </select>
         </div>
       </div>
@@ -120,19 +126,20 @@
       <div class="form-group row">
         <label for="alamat" class="col-md-2 col-form-label">Alamat Selama Cuti</label>
         <div class="col-md-8">
-          <textarea class="form-control" id="alamat" rows="3" name="alamat" required></textarea>
+          <textarea class="form-control" id="alamat" rows="3" name="alamat" required>{{Auth()->user()->alamat}}</textarea>
         </div>
       </div>
       
       <div class="form-group row">
         <label for="no_telp" class="col-md-2 col-form-label">No Telpon</label>
         <div class="col-md-8">
-          <input type="number" class="form-control" id="no_telp" name="no_telp" required>
+          <input type="number" class="form-control" id="no_telp" name="no_telp" value="{{Auth()->user()->no_telp}}" required>
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-md-10 text-right">
+          @csrf
           <button type="submit" class="btn btn-primary">
             Submit
             <i class="fas fa-paper-plane"></i>

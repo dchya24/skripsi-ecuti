@@ -27,7 +27,9 @@ Route::middleware('auth')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'dashboardPage'])->name('dashboard');
     Route::prefix('cuti')->group(function(){
         Route::get("", [CutiController::class, "index"])->name('cuti.index');
+        Route::post("/tambah", [CutiController::class, "addCuti"])->name('cuti.add.action');
         Route::get("/tambah", [CutiController::class, "showCreatePage"])->name('cuti.add');
+        Route::post("/delete", [CutiController::class, "deleteCuti"])->name('cuti.delete');
     });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

@@ -1,5 +1,8 @@
 <?php
 
+use App\Enums\JenisCuti;
+use App\Enums\StatusCuti;
+
 if(!function_exists('getFullName')){
   function getFullName($title_depan, $nama, $title_belakang){
       $gelar_belakang = $title_belakang ? ', ' . $title_belakang : '';
@@ -17,5 +20,17 @@ if(!function_exists('masaKerja')){
     $diff = $date->y . ' Tahun ' . $date->m . ' Bulan ' . $date->d . ' Hari';
 
     return $diff;
+  }
+}
+
+if(!function_exists('jenisCuti')){
+  function jenisCuti($id){    
+    return $id ? JenisCuti::OPTIONS[$id] : null;
+  }
+}
+
+if(!function_exists('statusCuti')){
+  function statusCuti($id){
+    return $id ? StatusCuti::OPTIONS[$id] : null;
   }
 }
