@@ -9,4 +9,8 @@ class SubBagian extends Model
 {
     use HasFactory;
     protected $table = "sub_bagian";
+
+    public function bagian(){
+        return $this->belongsTo(Bagian::class, 'bagian_id');
+    }
 }

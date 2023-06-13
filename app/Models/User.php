@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -11,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +20,19 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
+        'nip',
+        'nik',
+        'gelar_depan',
+        'gelar_belakang',
+        'tempat_lahir',
+        'tgl_lahir',
+        'jenis_kelamin',
+        'tmt_masuk',
+        'alamat',
+        "jabatan_id"
     ];
 
     /**
@@ -51,5 +63,17 @@ class User extends Authenticatable
 
     public function jabatan(){
         return $this->belongsTo(jabatan::class, 'jabatan_id');
+    }
+
+    public function riwayatCuti(){
+        return $this->hasMany(PerizinanCuti::class, 'user_id');
+    }
+    
+    public function persetujuanAtasan(){
+        return $this->hasMany(PerizinanCuti::class, 'atasan_langsung_id');
+    }
+    
+    public function keputusanPejabat(){
+        return $this->hasMany(PerizinanCuti::class, 'pejabat_berwenang_id');
     }
 }
