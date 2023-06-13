@@ -2,7 +2,7 @@
 @section('title', 'Pengajuan Cuti')
 @section('content')
   @if($errors->any())
-    @foreach ($errors->all(0) as $error)
+    @foreach ($errors->all() as $error)
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
         {{$error}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -11,6 +11,15 @@
       </div>
     @endforeach
   @endif
+  @if(session('session'))
+  <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
+    {{session('session')['message']}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
+
   <h5>Perizinan Cuti</h5>
 
   <h6 class="border-bottom mt-2 py-3">Data Pegawai</h6>
@@ -61,7 +70,7 @@
       <div class="form-group row">
         <label for="jenis_cuti" class="col-md-2 col-form-label">Jenis Cuti</label>
         <div class="col-md-8">
-          <select class="form-control" id="jenis_cuti" name="jenis_cuti" required>
+          <select class="form-control" id="jenis_cuti" name="jenis_cuti_id" required>
             <option value="">-</option>
             @foreach ($optionsJenisCuti as $key => $option)
                 <option value="{{$key}}">{{$option}}</option>
@@ -73,7 +82,7 @@
       <div class="form-group row">
         <label for="alasan" class="col-md-2 col-form-label">Alasan Cuti</label>
         <div class="col-md-8">
-          <textarea class="form-control" id="alasan" rows="3" name="alasan" required></textarea>
+          <textarea class="form-control" id="alasan" rows="3" name="alasan_cuti" required></textarea>
         </div>
       </div>
       
@@ -94,7 +103,7 @@
         <label class="col-md-2 col-form-label">Tanggal</label>
         <div class="col-md-8 input-daterange row">
           <span class="input-group cuti-date col-md-4 pr-sm-0">
-            <input class="form-control datepicker" type="text" id="start_date" name="start_date" placeholder="mm/dd/yyyy">
+            <input class="form-control datepicker" type="text" id="start_date" name="mulai_cuti" placeholder="mm/dd/yyyy">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
             </div>
@@ -103,7 +112,7 @@
             <span class="align-middle font-weight-bold m-sm-auto">S/D</span>
           </div>
           <span class="input-group cuti-date col-md-4 pl-sm-0">
-            <input class="form-control datepicker" type="text" id="end_date" name="end_date" placeholder="mm/dd/yyyy">
+            <input class="form-control datepicker" type="text" id="end_date" name="akhir_cuti" placeholder="mm/dd/yyyy">
             <div class="input-group-append">
               <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
             </div>
@@ -115,7 +124,7 @@
         <label for="lama" class="col-md-2 col-form-label">Lamanya Cuti</label>
         <div class="col-md-3">
           <div class="input-group">
-            <input type="number" class="form-control" id="lama" name="lama" value="0" disabled>
+            <input type="number" class="form-control" id="lama" name="jumlah_hari" value="0" readonly>
             <div class="input-group-append">
               <span class="input-group-text font-weight-bold">Hari</span>
             </div>

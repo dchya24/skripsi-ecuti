@@ -30,32 +30,37 @@
       </table>
     </div>
 
-    <div class="col-md-12">
-      <h6 class="pt-2 border-top">Atasan Langsung</h6>
-      <table class="table table-borderless">
-        <tr class="d-flex">
-          <td class="col-3">Nama</td>
-          <td class="col-4">{{$atasanLangsung->full_name}}</td>
-        </tr>
-        <tr class="d-flex">
-          <td class="col-3">Jabatan</td>
-          <td class="col-4">{{$atasanLangsung->jabatan->nama}}</td>
-        </tr>
-      </table>
-    </div>
+    @isset($atasanLangsung)
+      <div class="col-md-12">
+        <h6 class="pt-2 border-top">Atasan Langsung</h6>
+        <table class="table table-borderless">
+          <tr class="d-flex">
+            <td class="col-3">Nama</td>
+            <td class="col-4">{{getFullName($atasanLangsung->gelar_depan, $atasanLangsung->nama, $atasanLangsung->gelar_belakang)}}</td>
+          </tr>
+          <tr class="d-flex">
+            <td class="col-3">Jabatan</td>
+            <td class="col-4">{{$atasanLangsung->jabatan}}</td>
+          </tr>
+        </table>
+      </div>
+    @endisset
 
-    <div class="col-md-12">
-      <h6 class="pt-2 border-top">Pejabat Berwenang</h6>
-      <table class="table table-borderless">
-        <tr class="d-flex">
-          <td class="col-3">Nama</td>
-          <td class="col-4">{{getFullName($pejabatBerwenang->gelar_depan, $pejabatBerwenang->nama, $pejabatBerwenang->gelar_belakang)}}</td>
-        </tr>
-        <tr class="d-flex">
-          <td class="col-3">Jabatan</td>
-          <td class="col-4">{{$pejabatBerwenang->jabatan}}</td>
-        </tr>
-      </table>
-    </div>
+    @isset($pejabatBerwenang)        
+      <div class="col-md-12">
+        <h6 class="pt-2 border-top">Pejabat Berwenang</h6>
+        <table class="table table-borderless">
+          <tr class="d-flex">
+            <td class="col-3">Nama</td>
+            <td class="col-4">{{getFullName($pejabatBerwenang->gelar_depan, $pejabatBerwenang->nama, $pejabatBerwenang->gelar_belakang)}}</td>
+          </tr>
+          <tr class="d-flex">
+            <td class="col-3">Jabatan</td>
+            <td class="col-4">{{$pejabatBerwenang->jabatan}}</td>
+          </tr>
+        </table>
+      </div>
+    @endisset
+
   </div>
 @endsection
