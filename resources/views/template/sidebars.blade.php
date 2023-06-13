@@ -53,40 +53,43 @@
             </ul>
           </div>
         </li>
-        <li class="sidebar-dropdown">
-          <a href="#">
-            <i class="fas fa-tasks"></i>
-            Approval Cuti Pegawai
-          </a>
-          <div class="sidebar-submenu">
-            <ul>
-              <li>
-                <a href="#">Approval Atasan</a>
-              </li>
-              <li>
-                <a href="#">Approval Pejabat</a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        
-        <li class="sidebar-dropdown">
+        {{-- @if(!isStaff(Auth::user()->jabatan)) --}}
+          <li class="sidebar-dropdown  @if($sidebar_menu === 'approval') active @endif">
+            <a href="#">
+              <i class="fas fa-tasks"></i>
+              Approval Cuti Pegawai
+            </a>
+            <div class="sidebar-submenu" @if($sidebar_menu === 'approval') style="display: block;" @endif>
+              <ul>
+                <li @if($sidebar_submenu === 'approval.atasan') class="active" @endif>
+                  <a href="{{route('approval.index')}}">Pertimbangan Atasan</a>
+                </li>
+                <li @if($sidebar_submenu === 'approval.pejabat') class="active" @endif>
+                  <a href="{{route('keputusan.index')}}">Keputusan Pejabat</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        {{-- @endif --}}
+
+        {{-- @if(!isStaff(Auth::user()->jabatan)) --}}
+        <li class="sidebar-dropdown  @if($sidebar_menu === 'kelola') active @endif">
           <a href="#">
             <i class="fas fa-address-book"></i>
             Administrator
           </a>
-          <div class="sidebar-submenu">
+          <div class="sidebar-submenu"  @if($sidebar_menu === 'kelola') style="display: block;" @endif>
             <ul>
-              <li>
-                <a href="#">Kelola Pegawai</a>
+              <li @if($sidebar_submenu === 'kelola.pegawai') class="active" @endif>
+                <a href="{{route('pegawai.index')}}">Kelola Pegawai</a>
               </li>
-              <li>
-                <a href="#">Kelola Jabatan</a>
+              <li @if($sidebar_submenu === 'kelola.jabatan') class="active" @endif>
+                <a href="{{route('jabatan.index')}}">Kelola Jabatan</a>
               </li>
             </ul>
           </div>
         </li>
-        
+        {{-- @endif --}}
         {{-- <li class="sidebar-dropdown">
           <a href="#">
             <i class="fa fa-tachometer-alt"></i>
@@ -115,8 +118,8 @@
   </div>
   <!-- sidebar-content  -->
   <div class="sidebar-footer">
-    <a href="#">
+    {{-- <a href="#">
       <i class="fa fa-sign-out-alt"></i>
-    </a>
+    </a> --}}
   </div>
 </nav>

@@ -24,10 +24,10 @@ class AddCutiRequest extends FormRequest
     public function rules()
     {
         return [
-            'jenis_cuti' => "required",
-            'alasan' => "required",
-            'start_date' => 'required',
-            'end_date' => 'required',
+            'jenis_cuti_id' => "required",
+            'alasan_cuti' => "required",
+            'mulai_cuti' => 'required',
+            'akhir_cuti' => 'required',
             'alamat' => 'required',
             'no_telp' => 'required',
         ];
