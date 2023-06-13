@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -30,9 +31,12 @@ class LoginController extends Controller
                 $request->session()->regenerate();
     
                 return redirect()->route('dashboard');
+            }else{
+                return redirect()->back()->withErrors('Data login tidak valid!');
             }
         }catch(Exception $e){
-            dd($e->getMessage());
+            Log::critical($e->getMessage());
+            abort(502);
         }
     }
 

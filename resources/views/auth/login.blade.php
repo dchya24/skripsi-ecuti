@@ -14,6 +14,24 @@
     <div class="row align-items-center h-100">
 
       <div class="col-5 mx-auto">
+        @if(session('session'))
+        <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
+          {{session('session')['message']}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        @endif
+        @if($errors->any())
+          @foreach ($errors->all(0) as $error)
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{$error}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          @endforeach
+        @endif
         <div class="card justify-center">
           <div class="card-header">
             Login

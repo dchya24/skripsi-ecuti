@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\JenisCuti;
+use App\Enums\RumpunJabatan;
 use App\Enums\StatusCuti;
 
 if(!function_exists('getFullName')){
@@ -32,5 +33,14 @@ if(!function_exists('jenisCuti')){
 if(!function_exists('statusCuti')){
   function statusCuti($id){
     return $id ? StatusCuti::OPTIONS[$id] : null;
+  }
+}
+
+if(!function_exists('isStaff')){
+  function isStaff($jabatan){
+    if($jabatan->rumpunJabatan->value == RumpunJabatan::STAFF){
+      return true;
+    }
+    return false;
   }
 }
