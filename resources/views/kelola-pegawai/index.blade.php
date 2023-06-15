@@ -21,12 +21,32 @@
   <h5>Data Pegawai</h5>
 
   <div class="row">
-    <div class="col-md-10">
-      <form method="GET" class="form-inline">
-        <input type="text" class="form-control" name="nama_pegawai" placeholder="Cari nama pegawai">
-    
-        <button type="submit" class="btn btn-primary mx-1">Filter</button>
-        <button type="clear" class="btn btn-outline-secondary mx-1">Reset</button>
+    <div class="col-md-9">
+      <form method="GET" class="form-inline row">
+        <div class="col-md-3">
+          <input type="text" class="form-control" name="nama_pegawai" placeholder="Cari nama pegawai">
+        </div>
+        <div class="col-md-3">
+          <select class="form-control w-100" name="jabatan_id" id="">
+            <option value="">Jabatan</option>
+            @foreach ($jabatan as $item)
+              <option value="{{$item->id}}">{{$item->nama}}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-control w-100" name="subbagian_id" id="">
+              <option value="">Subbagian/Seksi</option>
+              @foreach ($subbagian as $item)
+                <option value="{{$item->id}}">{{$item->nama}}</option>
+              @endforeach
+          </select>
+        </div>
+        
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-primary">Filter</button>
+          <button type="clear" class="btn btn-outline-secondary mx-1">Reset</button>          
+        </div>
       </form>
     </div>
     <div class="col-md-2 text-right">
@@ -77,5 +97,5 @@
       @endforelse
     </tbody>
   </table>
-  {{$data->onEachSide(5)->links()}}
+  {{$data->onEachSide(10)->links()}}
 @endsection

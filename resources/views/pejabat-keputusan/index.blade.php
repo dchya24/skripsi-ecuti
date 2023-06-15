@@ -21,14 +21,14 @@
   <h5>Keputusan Pejabat Berwenang</h5>
 
   <form method="GET" class="form-inline">
-    <select name="" id="" class="form-control mr-1">
+    <select name="jenis_cuti" id="" class="form-control mr-1">
       <option value="">Jenis Cuti</option>
       @foreach ($optionsJenisCuti as $key => $option)
           <option value="{{$key}}">{{$option}}</option>
       @endforeach
     </select>
 
-    <select name="status_atasan" class="form-control mx-1">
+    <select name="status_pejabat" class="form-control mx-1">
       <option value="">Status Pejabat</option>
       @foreach ($statusCutiOptions as $key => $option)
           <option value="{{$key}}">{{$option}}</option>
@@ -89,5 +89,6 @@
       @endforelse
     </tbody>
   </table>
+  {{$data->onEachSide(10)->links()}}
   
 @endsection

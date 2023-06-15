@@ -13,13 +13,31 @@ use Illuminate\Support\Facades\Hash;
 
 class KelolaPegawaiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = User::with('jabatan.subbagian')->paginate(5);
-        $data->appends(request()->input());
+        $data = User::with('jabatan.subbagian');
+        $jabatan = Jabatan::all();
+        $subbagian = SubBagian::all();
+
+        if($request->query('nama_pegawai')){
+            $data->where('nama', 'like', '%' . $request->query('nama_pegawai') . '%');
+        }
+
+        if($request->query('jabatan_id')){
+            $data->where('jabatan_id', $request->query('jabatan_id'));
+        }
+
+        if($request->query('subbagian_id')){
+            $data->whereRelation('jabatan', 'subbagian_id', $request->query('subbagian_id'));
+        }
+
+        $user = $data->paginate(5);
+        $user->appends($request->input());
 
         return $this->view('kelola-pegawai.index', [
-            'data' => $data
+            'data' => $user,
+            'jabatan' => $jabatan,
+            'subbagian' => $subbagian
         ],sidebar_menu: 'kelola', sidebar_submenu: 'pegawai');
     }
 

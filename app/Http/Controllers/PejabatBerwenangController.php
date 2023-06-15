@@ -12,14 +12,25 @@ use Illuminate\Http\Request;
 
 class PejabatBerwenangController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         $data = PerizinanCuti::with(['user', 'user.jabatan', 'atasanLangsung', 'pejabatBerwenang'])
-            ->where('status_persetujuan_atasan_langsung', StatusCuti::DISETUJUI)
-            ->where('status_keputusan_pejabat_berwenang', StatusCuti::PROSES)
-            ->get();
+            ->where('status_persetujuan_atasan_langsung', StatusCuti::DISETUJUI);
+            // ->where('status_keputusan_pejabat_berwenang', StatusCuti::PROSES)
 
+        $filterStatus = $request->query('status_pejabat');
+        $filterJenisCuti = $request->query('jenis_cuti');
+
+        if($filterStatus){
+            $data->where('status_keputusan_pejabat_berwenang', $filterStatus);
+        }
+
+        if($filterJenisCuti){
+            $data->where('jenis_cuti_id', $filterJenisCuti);
+        }
+
+        $riwayat = $data->paginate(5);
         return $this->view('pejabat-keputusan.index', [
-            'data' => $data,
+            'data' => $riwayat,
             'optionsJenisCuti' => JenisCuti::OPTIONS,
             'statusCutiOptions' => StatusCuti::OPTIONS
         ], sidebar_menu: 'approval', sidebar_submenu: 'approval.pejabat');

@@ -32,7 +32,8 @@ class User extends Authenticatable
         'jenis_kelamin',
         'tmt_masuk',
         'alamat',
-        "jabatan_id"
+        "jabatan_id",
+        'no_telp'
     ];
 
     /**

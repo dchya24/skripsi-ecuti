@@ -11,13 +11,19 @@ use Illuminate\Http\Request;
 class KelolaJabatanController extends Controller
 {
     
-    public function index()
+    public function index(Request $request)
     {
-        $data = jabatan::with('subbagian.bagian')->paginate(5);
-        $data->appends(request()->input());
+        $data = jabatan::with('subbagian.bagian');
+
+        if($request->query('nama_jabatan')){
+            $data->where('nama', 'like', '%' . $request->query('nama_jabatan') . '%');
+        }
+
+        $jabatan = $data->paginate(5);
+        $jabatan->appends(request()->input());
 
         return $this->view('kelola-jabatan.index', [
-            'data' => $data
+            'data' => $jabatan
         ],sidebar_menu: 'kelola', sidebar_submenu: 'jabatan');
     }
 
