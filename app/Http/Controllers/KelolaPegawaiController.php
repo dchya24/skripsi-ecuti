@@ -31,7 +31,7 @@ class KelolaPegawaiController extends Controller
             $data->whereRelation('jabatan', 'subbagian_id', $request->query('subbagian_id'));
         }
 
-        $user = $data->paginate(5);
+        $user = $data->paginate(10);
         $user->appends($request->input());
 
         return $this->view('kelola-pegawai.index', [

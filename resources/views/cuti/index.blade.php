@@ -80,6 +80,9 @@
               <x-status-cuti status="{{$riwayat->status_keputusan_pejabat_berwenang}}" />
             </td>
             <td>
+              <a href="" class="btn btn-sm btn-outline-success">
+                <i class="fas fa-print"></i>
+              </a>
               <a href="{{route('cuti.show', $riwayat->id)}}" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Lihat Detail dan Edit">
                 <i class="fas fa-edit"></i>
               </a>
@@ -87,7 +90,7 @@
                 <form action="{{route('cuti.delete')}}" method="POST" class="form d-inline">
                   @csrf
                   <input type="hidden" name="id" value={{$riwayat->id}}>
-                  <button type="submit" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete Data">
+                  <button type="submit" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="bottom" title="Hapus atau Batalkan pengajuan cuti">
                     <i class="fas fa-trash-alt"></i>
                   </button>
                 </form>

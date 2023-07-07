@@ -22,7 +22,9 @@ class PerizinanCuti extends Model
         "alamat_menjalankan_cuti",
         "no_telp",
         "atasan_langsung_id",
-        "pejabat_berwenang_id"
+        "pejabat_berwenang_id",
+        "status_persetujuan_atasan_langsung",
+        'user_id'
     ];
 
     public function user(){

@@ -29,7 +29,7 @@
         <button type="clear" class="btn btn-outline-secondary mx-1">Reset</button>
       </form>
     </div>
-    <div class="col-md-2 text-right">
+    <div class="col-md-4 mt-3">
       <a href="{{route('jabatan.create-page')}}" class="btn btn-success">
         <i class="fas fa-edit"></i>
         Tambah Data Jabatan
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <table class="table table-striped table-bordered mt-4">
+  <table class="table table-striped table-bordered mt-2">
     <thead>
       <tr>
         <th>No</th>

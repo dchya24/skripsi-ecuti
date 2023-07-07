@@ -44,3 +44,14 @@ if(!function_exists('isStaff')){
     return false;
   }
 }
+
+if(!function_exists('isPejabatBerwenang')){
+  function isPejabatBerwenang($jabatan){
+    if(in_array($jabatan->rumpunJabatan->value, [
+      RumpunJabatan::ESELON_III,  RumpunJabatan::ESELON_II
+    ])){
+      return true;
+    }
+    return false;
+  }
+}

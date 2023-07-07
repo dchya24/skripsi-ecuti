@@ -53,7 +53,7 @@
             </ul>
           </div>
         </li>
-        {{-- @if(!isStaff(Auth::user()->jabatan)) --}}
+        @if(!isStaff(Auth::user()->jabatan))
           <li class="sidebar-dropdown  @if($sidebar_menu === 'approval') active @endif">
             <a href="#">
               <i class="fas fa-tasks"></i>
@@ -64,15 +64,17 @@
                 <li @if($sidebar_submenu === 'approval.atasan') class="active" @endif>
                   <a href="{{route('approval.index')}}">Pertimbangan Atasan</a>
                 </li>
-                <li @if($sidebar_submenu === 'approval.pejabat') class="active" @endif>
-                  <a href="{{route('keputusan.index')}}">Keputusan Pejabat</a>
-                </li>
+                @if(!isPejabatBerwenang(Auth::user()->jabatan))
+                  <li @if($sidebar_submenu === 'approval.pejabat') class="active" @endif>
+                    <a href="{{route('keputusan.index')}}">Keputusan Pejabat</a>
+                  </li>
+                @endif
               </ul>
             </div>
           </li>
-        {{-- @endif --}}
+        @endif
 
-        {{-- @if(!isStaff(Auth::user()->jabatan)) --}}
+        @if(in_array(Auth::user()->jabatan_id, [13,14]))
         <li class="sidebar-dropdown  @if($sidebar_menu === 'kelola') active @endif">
           <a href="#">
             <i class="fas fa-address-book"></i>
@@ -89,7 +91,7 @@
             </ul>
           </div>
         </li>
-        {{-- @endif --}}
+        @endif
         {{-- <li class="sidebar-dropdown">
           <a href="#">
             <i class="fa fa-tachometer-alt"></i>
