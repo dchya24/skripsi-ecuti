@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function() {
         Route::post("/tambah", [CutiController::class, "addCuti"])->name('cuti.add.action');
         Route::get("/tambah", [CutiController::class, "showCreatePage"])->name('cuti.add');
         Route::post("/delete", [CutiController::class, "deleteCuti"])->name('cuti.delete');
+        Route::get("/pdf/{id}", [CutiController::class, "print"])->name('cuti.print');
     });
 
     Route::get("pertimbangan", [ApprovalCutiController::class, "index"])->name('approval.index');
@@ -68,6 +69,7 @@ Route::middleware('auth')->group(function() {
             Route::delete('/{id}', [KelolaJabatanController::class, 'destroy'])->name('jabatan.delete');
         });
     });
+
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });

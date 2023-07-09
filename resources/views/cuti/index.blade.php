@@ -80,7 +80,7 @@
               <x-status-cuti status="{{$riwayat->status_keputusan_pejabat_berwenang}}" />
             </td>
             <td>
-              <a href="" class="btn btn-sm btn-outline-success">
+              <a href="{{route('cuti.print', $riwayat->id)}}" class="btn btn-sm btn-outline-success">
                 <i class="fas fa-print"></i>
               </a>
               <a href="{{route('cuti.show', $riwayat->id)}}" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" data-placement="bottom" title="Lihat Detail dan Edit">

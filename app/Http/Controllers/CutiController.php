@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Service\GlobalService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CutiController extends Controller
 {
@@ -251,5 +252,12 @@ class CutiController extends Controller
                 ->count();
 
         return $perizinanCuti == 0 ? true : false;
+    }
+
+    public function print($id){
+        // dd(PerizinanCuti::find($id));
+        // return view('cuti.print');
+        $pdf = Pdf::loadView('cuti.print')->setPaper('a4');
+        return $pdf->stream();
     }
 }
