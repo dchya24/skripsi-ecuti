@@ -26,7 +26,7 @@ class GlobalService {
   }
 
   public static function getAtasanPejabat($jabatan_id){
-      $jabatan = jabatan::find($jabatan_id);
+      $jabatan = Jabatan::find($jabatan_id);
       $rumpun = $jabatan->rumpunJabatan;
 
       $rumpunEselonIV = [

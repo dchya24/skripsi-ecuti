@@ -46,7 +46,7 @@ class KelolaPegawaiController extends Controller
 
     public function create()
     {
-        $jabatan = jabatan::all();
+        $jabatan = Jabatan::all();
         return $this->view('kelola-pegawai.add', [
             'jabatan' => $jabatan,
         ],sidebar_menu: 'kelola', sidebar_submenu: 'pegawai');
@@ -104,7 +104,7 @@ class KelolaPegawaiController extends Controller
     public function show($id)
     {
         $data = User::with('jabatan')->where('id', $id)->first();
-        $jabatan = jabatan::all();
+        $jabatan = Jabatan::all();
         $catatanCuti = GlobalService::getCutiHistories($data->id);
 
         return $this->view('kelola-pegawai.detail', [

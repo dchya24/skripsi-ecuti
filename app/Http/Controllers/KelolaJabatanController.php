@@ -13,7 +13,7 @@ class KelolaJabatanController extends Controller
     
     public function index(Request $request)
     {
-        $data = jabatan::with('subbagian.bagian');
+        $data = Jabatan::with('subbagian.bagian');
 
         if($request->query('nama_jabatan')){
             $data->where('nama', 'like', '%' . $request->query('nama_jabatan') . '%');
@@ -48,7 +48,7 @@ class KelolaJabatanController extends Controller
     public function store(Request $request)
     {
         $data = $request->except('_token');
-        $user = jabatan::create($data);
+        $user = Jabatan::create($data);
 
         return redirect()->route('jabatan.index')->with("session", [
             'status' => 'success',
@@ -66,7 +66,7 @@ class KelolaJabatanController extends Controller
     {
         $subbagian = SubBagian::with('bagian')->get();
         $rumpunJabatan = RumpunJabatan::all();
-        $jabatan = jabatan::find($id);
+        $jabatan = Jabatan::find($id);
 
         return $this->view('kelola-jabatan.detail', [
             'jabatan' => $jabatan,
@@ -97,7 +97,7 @@ class KelolaJabatanController extends Controller
     {
         $data = $request->except(['_token', '_method']);
 
-        jabatan::where('id', $id)->update($data);
+        Jabatan::where('id', $id)->update($data);
 
         return redirect()->back()->with("session", [
             'status' => 'success',

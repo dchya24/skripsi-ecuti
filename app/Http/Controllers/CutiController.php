@@ -120,7 +120,7 @@ class CutiController extends Controller
                 $data['pejabat_berwenang_id'] = $atasan['pejabat_berwenang']->id;
             }
             else{
-                $kepalaDinas = jabatan::with('user')->where('nama', 'Kepala Dinas')->first();
+                $kepalaDinas = Jabatan::with('user')->where('nama', 'Kepala Dinas')->first();
                 $data['pejabat_berwenang_id'] = $kepalaDinas->user[0]->id;
             }
 
@@ -144,7 +144,7 @@ class CutiController extends Controller
                     'message' => "Anda sudah menggunakan cuti alasan penting!"
                 ]);
             }
-            $kepalaDinas = jabatan::with('user')->where('nama', 'Kepala Dinas')->first();
+            $kepalaDinas = Jabatan::with('user')->where('nama', 'Kepala Dinas')->first();
             $data['pejabat_berwenang_id'] = $kepalaDinas->user[0]->id;
         }
         else if($jenis_cuti == JenisCuti::CUTI_BERSALIN){
@@ -164,7 +164,7 @@ class CutiController extends Controller
             else{
                 $data['jenis_cuti_id'] = JenisCuti::CUTI_BERSALIN;
             }
-            $kepalaDinas = jabatan::with('user')->where('nama', 'Kepala Dinas')->first();
+            $kepalaDinas = Jabatan::with('user')->where('nama', 'Kepala Dinas')->first();
             $data['pejabat_berwenang_id'] = $kepalaDinas->user[0]->id;
         }
         else if($jenis_cuti == JenisCuti::CUTI_DILUAR_TANGGUNGAN_NEGARA){
@@ -185,7 +185,7 @@ class CutiController extends Controller
                     'message' => "Anda sudah menggunakan Cuti Diluar Tanggungan Negara!"
                 ]);
             }
-            $kepalaDinas = jabatan::with('user')->where('nama', 'Kepala Dinas')->first();
+            $kepalaDinas = Jabatan::with('user')->where('nama', 'Kepala Dinas')->first();
             $data['pejabat_berwenang_id'] = $kepalaDinas->user[0]->id;
         }
 
@@ -301,7 +301,7 @@ class CutiController extends Controller
     }
 
     private static function getBatasBidang($jabatan_id){
-        $jabatan = jabatan::find($jabatan_id);
+        $jabatan = Jabatan::find($jabatan_id);
 
         $listJabatan = Jabatan::where('subbagian_id', $jabatan->subbagian_id)->pluck('id');
         $listPegawai = User::whereIn('jabatan_id', $listJabatan)->get();
