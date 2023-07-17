@@ -219,7 +219,7 @@
       @foreach($statusCuti as $status)
         <td>
           @if($perizinanCuti->status_persetujuan_atasan_langsung == $status)
-              {{$perizinanCuti->alasan_persetujuan_atasan_langsung}}
+              {{($perizinanCuti->alasan_persetujuan_atasan_langsung) ? $perizinanCuti->alasan_persetujuan_atasan_langsung : 'V'}}
               @elseif(!$perizinanCuti->status_persetujuan_atasan_langsung ||$perizinanCuti->status_persetujuan_atasan_langsung == 99)
             <span style="color: white">a</span>
           @endif
