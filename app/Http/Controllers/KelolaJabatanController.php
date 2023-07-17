@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\jabatan;
+use App\Models\Jabatan;
 use App\Models\RumpunJabatan;
 use App\Models\SubBagian;
 use App\Models\User;

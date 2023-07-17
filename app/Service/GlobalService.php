@@ -3,7 +3,7 @@ namespace App\Service;
 
 use App\Enums\RumpunJabatan;
 use App\Models\CatatanCuti;
-use App\Models\jabatan;
+use App\Models\Jabatan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 

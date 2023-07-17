@@ -6,7 +6,7 @@ use App\Enums\RumpunJabatan;
 use App\Models\Bagian;
 use App\Models\RumpunJabatan as RumpunJabatanModel;
 use App\Models\CatatanCuti;
-use App\Models\jabatan;
+use App\Models\Jabatan;
 use App\Models\SubBagian;
 use App\Models\User;
 use App\Service\GlobalService;

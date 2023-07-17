@@ -8,7 +8,7 @@ use App\Enums\RumpunJabatan;
 use App\Enums\StatusCuti;
 use App\Http\Requests\AddCutiRequest;
 use App\Models\CatatanCuti;
-use App\Models\jabatan;
+use App\Models\Jabatan;
 use App\Models\PerizinanCuti;
 use App\Models\User;
 use App\Service\GlobalService;

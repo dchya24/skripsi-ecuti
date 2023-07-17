@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CatatanCuti;
-use App\Models\jabatan;
+use App\Models\Jabatan;
 use App\Models\User;
 use App\Service\GlobalService;
 use Illuminate\Contracts\Database\Eloquent\Builder;
