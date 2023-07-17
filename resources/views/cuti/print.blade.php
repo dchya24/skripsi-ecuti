@@ -44,19 +44,19 @@
     </tr>
     <tr>
       <td>Nama</td>
-      <td>Nama User</td>
+      <td>{{$userData->nama}}</td>
       <td>NIP</td>
-      <td>00980132</td>
+      <td>{{$userData->nip}}</td>
     </tr>
     <tr>
       <td>Jabatan</td>
-      <td>Apa</td>
+      <td>{{$userData->jabatan->nama}}</td>
       <td>Masa Kerja</td>
-      <td>Kerja</td>
+      <td>{{masaKerja($userData->tmt_masuk)}}</td>
     </tr>
     <tr>
       <td>Unit Kerja</td>
-      <td colspan="3">Unit Kerja</td>
+      <td colspan="3">{{$userData->jabatan->subbagian->nama}}</td>
     </tr>
   </table>
 
@@ -69,21 +69,33 @@
     </tr>
     <tr>
       <td>1. Cuti Tahunan</td>
-      <td style="width: 5%;"> 0 </td>
+      <td style="width: 5%; text-align: center;"> 
+        <?php echo $perizinanCuti->jenis_cuti_id == $jenisCuti['CUTI_TAHUNAN'] ? 'v' : ''; ?> 
+      </td>
       <td>2. Cuti Besar</td>
-      <td style="width: 5%;"> 0 </td>
+      <td style="width: 5%; text-align: center;">
+        <?php echo $perizinanCuti->jenis_cuti_id == $jenisCuti['CUTI_BESAR'] ? 'v' : ''; ?>
+      </td>
     </tr>
     <tr>
       <td>3. Cuti Sakit</td>
-      <td>0</td>
+      <td style="text-align: center;">
+        <?php echo $perizinanCuti->jenis_cuti_id == $jenisCuti['CUTI_SAKIT'] ? 'v' : ''; ?>
+      </td>
       <td>4. Cuti Melahirkan</td>
-      <td>0</td>
+      <td style="text-align: center;">
+        <?php echo $perizinanCuti->jenis_cuti_id == $jenisCuti['CUTI_BERSALIN'] ? 'v' : ''; ?>
+      </td>
     </tr>
     <tr>
       <td>5. Cuti Karena Alasan Penting</td>
-      <td>0</td>
+      <td style="text-align: center;">
+        <?php echo $perizinanCuti->jenis_cuti_id == $jenisCuti['CUTI_ALASAN_PENTING'] ? 'v' : ''; ?>
+      </td>
       <td>5. Cuti Diluar Tanggungan Negara</td>
-      <td>0</td>
+      <td style="text-align: center;">
+        <?php echo $perizinanCuti->jenis_cuti_id == $jenisCuti['CUTI_DILUAR_TANGGUNGAN_NEGARA'] ? 'v' : ''; ?>
+      </td>
     </tr>
   </table>
 
@@ -93,7 +105,7 @@
       <td>III. ALASAN CUTI</td>
     </tr>
     <tr>
-      <td>Sakit</td>
+      <td>{{$perizinanCuti->alasan_cuti}}</td>
     </tr>
   </table>
 
@@ -104,11 +116,11 @@
     </tr>
     <tr>
       <td style="width: 15%;">Selama</td>
-      <td style="width: 20%;">Hari</td>
+      <td style="width: 20%;"> {{$perizinanCuti->jumlah_hari}} Hari</td>
       <td style="width: 15%;">mulai tanggal</td>
-      <td style="width: 20%;">01/01/2001</td>
+      <td style="width: 20%;">{{$perizinanCuti->mulai_cuti}}</td>
       <td style="text-align: center; width: 5%">s/d</td>
-      <td style="width: 20%;">01/01/2001</td>
+      <td style="width: 20%;">{{$perizinanCuti->akhir_cuti}}</td>
     </tr>
   </table>
 
@@ -120,35 +132,53 @@
     <tr>
       <td colspan="3"> 1. CUTI TAHUNAN</td>
       <td style="width: 55%;">2. CUTI BESAR</td>
-      <td style="width: 15%; text-align: center;">0</td>
+      <td style="width: 15%; text-align: center;">{{$historiCuti[0]->jumlah_cuti_besar}}</td>
     </tr>
     <tr>
       <td style="text-align: center">Tahun</td>
-      <td style="text-align: center">Sisa</td>
-      <td style="text-align: center">Keterangan</td>
+      <td style="text-align: center; width: 6%;">Sisa</td>
+      <td style="text-align: center; width: 12%;">Keterangan</td>
       <td>3. CUTI SAKIT</td>
-      <td></td>
+      <td style="text-align: center;">{{$historiCuti[0]->jumlah_cuti_sakit}}</td>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
+      <td>N ({{$historiCuti[0]->tahun}})</td>
+      <td style="text-align: center">{{$historiCuti[0]->sisa_cuti_tahunan}}</td>
       <td></td>
       <td>4. CUTI MELAHIRKAN</td>
-      <td></td>
+      <td style="text-align: center;">{{$historiCuti[0]->jumlah_cuti_melahirkan}}</td>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
+      <td>
+        N-1
+        @if(array_key_exists(1, $historiCuti->toArray()))
+          ({{ $historiCuti[1]->tahun }})
+        @endif
+      </td>
+      <td style="text-align: center">
+        @if(array_key_exists(1, $historiCuti->toArray()))
+          {{ $historiCuti[1]->sisa_cuti_tahunan }} 
+        @endif
+      </td>
       <td></td>
       <td>5. CUTI KARENA ALASAN PENTING</td>
-      <td></td>
+      <td style="text-align: center;">{{$historiCuti[0]->jumlah_alasan_penting}}</td>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
+      <td> 
+        N-2 
+        @if(array_key_exists(2, $historiCuti->toArray()))
+          ({{ $historiCuti[2]->tahun }})
+        @endif
+      </td>
+      <td style="text-align: center">
+        @if(array_key_exists(2, $historiCuti->toArray()))
+          {{ $historiCuti[2]->sisa_cuti_tahunan }} 
+        @endif
+      </td>
       <td></td>
       <td>6. CUTI DI LUAR TANGGUNGAN NEGARA</td>
-      <td></td>
+      <td style="text-align: center;">{{$historiCuti[0]->jumlah_tanggungan_diluar_negara}}</td>
     </tr>
   </table>
 
@@ -158,22 +188,23 @@
       <td colspan="3">VI. ALAMAT SELAMA MENJALANKAN CUTI</td>
     </tr>
     <tr>
-      <td style="width: 47%">Alamat Dongkal ddkk</td>
+      <td style="width: 47%">{{$perizinanCuti->alamat_menjalankan_cuti}}</td>
       <td>TELP</td>
-      <td>0819324</td>
+      <td>{{$perizinanCuti->no_telp}}</td>
     </tr>
     <tr>
       <td></td>
-      <td colspan="2" style="text-align: center; font-size: 10pt">
+      <td colspan="2" style="text-align: center; font-size: 9pt">
         Hormat Saya,
         <br><br><br>
-        Cahya Dinar <br>
-        NIP 0908132
+        {{$userData->nama}} <br>
+        NIP{{$userData->nip}}
       </td>
     </tr>
   </table>
 
   {{-- Pertimbangan Atasan Langsung --}}
+  @if($perizinanCuti->atasan_langsung_id)
   <table>
     <tr>
       <td colspan="4">VII. PERTIMBANGAN ATASAN LANGSUNG</td>
@@ -185,10 +216,15 @@
       <td>TIDAK DISETUJUI****</td>
     </tr>
     <tr>
-      <td style="color: #fff">a</td>
-      <td></td>
-      <td></td>
-      <td></td>
+      @foreach($statusCuti as $status)
+        <td>
+          @if($perizinanCuti->status_persetujuan_atasan_langsung == $status)
+              {{$perizinanCuti->alasan_persetujuan_atasan_langsung}}
+              @elseif(!$perizinanCuti->status_persetujuan_atasan_langsung ||$perizinanCuti->status_persetujuan_atasan_langsung == 99)
+            <span style="color: white">a</span>
+          @endif
+        </td>
+      @endforeach
     </tr>
     <tr>
       <td></td>
@@ -196,13 +232,13 @@
       <td></td>
       <td>
         <br><br><br>
-        Nama 
+        {{$perizinanCuti->atasanLangsung->full_name}} 
         <br> 
-        NIP 
+        NIP {{$perizinanCuti->atasanLangsung->nip}} 
       </td>
     </tr>
   </table>
-
+  @endif
   {{-- Keputusan Pejabat yang Berwenang Memberikan Cuti --}}
   <table>
     <tr>
@@ -215,10 +251,15 @@
       <td>TIDAK DISETUJUI****</td>
     </tr>
     <tr>
-      <td style="color: #fff">a</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
+      @foreach($statusCuti as $status)
+        <td>
+          @if($perizinanCuti->status_keputusan_pejabat_berwenang == $status)
+            {{$perizinanCuti->alasan_keputusan_pejabat_berwenang}}
+          @elseif(!$perizinanCuti->status_keputusan_pejabat_berwenang ||$perizinanCuti->status_keputusan_pejabat_berwenang == 99)
+            <span style="color: white">a</span>
+          @endif
+        </td>
+      @endforeach
     </tr>
     <tr>
       <td></td>
@@ -226,9 +267,9 @@
       <td></td>
       <td>
         <br><br><br>
-        Nama 
+        {{$perizinanCuti->pejabatBerwenang->full_name}} 
         <br> 
-        NIP 
+        NIP {{$perizinanCuti->pejabatBerwenang->nip}}
       </td>
     </tr>
   </table>

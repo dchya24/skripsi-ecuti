@@ -22,14 +22,16 @@
 
   <form method="GET" class="form-inline">
     <select name="jenis_cuti" id="" class="form-control mr-1">
-      <option value="">Jenis Cuti</option>
+      <option value="all">Jenis Cuti</option>
+      <option value="all">Semua</option>
       @foreach ($optionsJenisCuti as $key => $option)
           <option value="{{$key}}">{{$option}}</option>
       @endforeach
     </select>
 
     <select name="status_pejabat" class="form-control mx-1">
-      <option value="">Status Pejabat</option>
+      <option value="all">Status Pejabat</option>
+      <option value="all">Semua</option>
       @foreach ($statusCutiOptions as $key => $option)
           <option value="{{$key}}">{{$option}}</option>
       @endforeach

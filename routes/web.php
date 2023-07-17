@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function() {
             Route::get('create', [KelolaPegawaiController::class, 'create'])->name('pegawai.create-page');
             Route::get('/{id}', [KelolaPegawaiController::class, 'show'])->name('pegawai.show');
             Route::put('/{id}', [KelolaPegawaiController::class, 'update'])->name('pegawai.update');
+            Route::patch('/{id}/', [KelolaPegawaiController::class, 'updatePassword'])->name('pegawai.password');
             Route::put('/jabatan/{id}', [KelolaPegawaiController::class, 'updateJabatan'])->name('pegawai.jabatan');
             Route::delete('/{id}', [KelolaPegawaiController::class, 'destroy'])->name('pegawai.delete');
         });

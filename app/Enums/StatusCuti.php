@@ -10,6 +10,13 @@ class StatusCuti
           PERUBAHAN = 2,
           DITANGGUHKAN = 3,
           TIDAK_DISETUJUI = 4;
+
+    const PRINT_PREVIEW = [
+      StatusCuti::DISETUJUI,
+      StatusCuti::PERUBAHAN,
+      StatusCuti::DITANGGUHKAN,
+      StatusCuti::TIDAK_DISETUJUI,
+    ];
     
     const OPTIONS = [
       99 => "Proses",

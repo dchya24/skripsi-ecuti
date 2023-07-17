@@ -21,11 +21,25 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
           <i class="far fa-user-circle fa-lg"></i>
+          @if($notification)
+            <span class="badge badge-pill badge-success">!</span>
+          @endif
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-item">
             Hello, {{Auth::user()->nama}}
           </div>
+
+          @if($notification)
+            <?php $dataNotif =  getStatusPerizinanCuti($notification->status_persetujuan_atasan_langsung, $notification->status_keputusan_pejabat_berwenang); ?>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item py-0 px-1 mb-1">
+              <div class="alert alert-{{$dataNotif['style']}}" role="alert" style="font-size: 0.8rem">
+                Status Perizinan Cuti Anda <br>
+                <strong>{{$dataNotif['message']}}</strong>
+              </div>
+            </div>
+          @endif
           <div class="dropdown-divider"></div>
           <form action="{{route('logout')}}" method="POST" class="form">
             @csrf
@@ -51,5 +65,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   <script src="{{asset('js/template.js')}}"></script>
+  @yield('script')
 </body>
 </html>

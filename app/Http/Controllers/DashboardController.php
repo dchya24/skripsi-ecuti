@@ -15,8 +15,7 @@ class DashboardController extends Controller
     public function dashboardPage(){
         $user = Auth()->user();
         $dataJabatan = GlobalService::getAtasanPejabat($user->jabatan_id);
- 
-        // }
+        // dd($dataJabatan);
 
         $catatanCuti = GlobalService::getCutiHistories($user->id);
         $atasanLangsung = $dataJabatan['atasan_langsung'] ? $dataJabatan['atasan_langsung'] : null; 

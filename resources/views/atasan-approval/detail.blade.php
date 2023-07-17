@@ -11,7 +11,21 @@
       </div>
     @endforeach
   @endif
-  <h5>Perizinan Cuti</h5>
+  @if(session('session'))
+  <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
+    {{session('session')['message']}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
+  <h5>
+    <a href="{{route('approval.index')}}" class="btn btn-outline-secondary btn-sm">
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </a>
+    Perizinan Cuti
+  </h5>
 
   <h6 class="border-bottom mt-2 py-3">Data Pegawai</h6>
   @include('component.table_pegawai')
@@ -76,7 +90,7 @@
         <label for="bukti" class="col-md-2 col-form-label">Bukti</label>
         <div class="col-md-8">
           @if($data->bukti)
-          : <a href="" class="btn btn-outline-primary">Lihat Bukti</a>
+          : <a href="{{asset($data->bukti)}}" class="btn btn-sm btn-outline-primary">Lihat Bukti</a>
           @else
           : Tidak ada Bukti
           @endif
@@ -112,25 +126,37 @@
           : {{ $data->no_telp }}
         </div>
       </div>
-
       <div class="form-group row border-top pt-2">
         <label for="alasan_pertimbangan" class="col-md-2 col-form-label">Alasan Pertimbangan</label>
         <div class="col-md-8">
+          <?php
+            // $statusPejabat = ($data->status_keputusan_pejabat_berwenang != null ||$data->status_keputusan_pejabat_berwenang != 99);
+            $statusPejabat = !in_array($data->status_keputusan_pejabat_berwenang, [null, 99]);
+          ?>
           @foreach($statusCutiOptions as $key => $option)
             @if($key != 99)
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="status" id="status-{{$key}}" value="{{$key}}">
-                <label class="form-check-label" for="status-{{$key}}"> {{$option}} </label>
+                <input class="form-check-input" type="radio" name="status" id="status-{{$key}}" value="{{$key}}" <?php echo ($key == $data->status_persetujuan_atasan_langsung) ? 'checked': ''; ?>  <?php echo $statusPejabat ? ' disabled' : '';?>>
+                <label class="form-check-label" for="status-{{$key}}">
+                  {{$option}}
+                </label>
               </div>
             @endif
           @endforeach
+          
+          @if($statusPejabat)
+            <br>
+            <small id="" class="text-danger">
+              Anda Tidak Bisa mengubah status pertimbangan karena sudah diberikan keputusan oleh pejabat berwenang!
+            </small>
+          @endif
         </div>
       </div>
       
       <div class="form-group row">
         <label for="alasan_pertimbangan" class="col-md-2 col-form-label">Alasan Pertimbangan</label>
         <div class="col-md-8">
-          <textarea class="form-control" id="alasan_pertimbangan" rows="3" name="alasan_pertimbangan" required></textarea>
+          <textarea class="form-control" id="alasan_pertimbangan" rows="3" name="alasan_pertimbangan"></textarea>
         </div>
       </div>
 
@@ -138,7 +164,7 @@
         <div class="col-md-10 text-right">
           @csrf
           <input type="hidden" name="_id" value="{{$data->id}}">
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn btn-primary" <?php echo $statusPejabat ? 'disabled' : '';?>>
             Submit
             <i class="fas fa-paper-plane"></i>
           </button>

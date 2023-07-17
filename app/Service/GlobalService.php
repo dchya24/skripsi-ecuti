@@ -26,12 +26,12 @@ class GlobalService {
   }
 
   public static function getAtasanPejabat($jabatan_id){
-      $jabatan = Jabatan::find($jabatan_id);
+      $jabatan = jabatan::find($jabatan_id);
       $rumpun = $jabatan->rumpunJabatan;
 
       $rumpunEselonIV = [
         RumpunJabatan::JFT_SUBKOORDINATOR,
-        $rumpun->value == RumpunJabatan::ESELON_IV
+        RumpunJabatan::ESELON_IV
       ];
 
       $jabatanAtasan = [];
@@ -55,6 +55,11 @@ class GlobalService {
         $jabatanAtasan = self::queryAtasanLangsung()
           ->where('rj.value', $rumpun->value -1)
           ->where('b.id', $jabatan->subbagian->bagian_id)
+          ->first();
+      }
+      else if($rumpun->value == RumpunJabatan::ESELON_III){
+        $pejabat = self::queryAtasanLangsung()
+          ->where('rj.value', $rumpun->value -1)
           ->first();
       }
 

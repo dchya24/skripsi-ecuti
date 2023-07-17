@@ -1,14 +1,6 @@
 @extends('template.app')
-@section('title', 'Approval')
+@section('title', 'Pegawai')
 @section('content')
-  @if(session('session'))
-  <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
-    {{session('session')['message']}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
   @if(session('session'))
   <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
     {{session('session')['message']}}
@@ -72,8 +64,11 @@
 
     <div class="form-group row">
       <label for="tgl_lahir" class="col-md-2 col-form-label">Tanggal Lahir</label>
-      <div class="col-md-8">
-        <input type="text" class="form-control" id="tgl_lahir" name="tgl_lahir">
+      <div class="input-group date tgl_lahir col-md-8" id="tgl_lahir_div">
+        <input class="form-control datepicker" type="text" id="tgl_lahir" name="tgl_lahir" placeholder="mm/dd/yyyy">
+        <div class="input-group-append">
+          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+        </div>
       </div>
     </div>
 
@@ -108,14 +103,22 @@
     <div class="form-group row">
       <label for="tmt_masuk" class="col-md-2 col-form-label">TMT Masuk</label>
       <div class="col-md-8">
-        <input type="text" class="form-control" id="tmt_masuk" name="tmt_masuk">
+        <div class="input-group date tmt_masuk" id="tmt_masuk_div">
+          <input class="form-control" type="text" id="tmt_masuk" name="tmt_masuk" placeholder="mm/dd/yyyy">
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i class="fas fa-calendar-alt"></i>
+            </span>
+          </div>
+        </div>
       </div>
+      
     </div>
 
     <div class="form-group row">
       <label for="password" class="col-md-2 col-form-label">Password</label>
       <div class="col-md-8">
-        <input type="text" class="form-control" id="password" name="password">
+        <input type="password" class="form-control" id="password" name="password">
       </div>
     </div>
 
@@ -141,4 +144,21 @@
   </form>
   
 
+@endsection
+@section('script')
+<script>
+  $(function () {
+    $('.tmt_masuk').datepicker({
+      autoclose: true,
+      format: "mm/dd/yyyy",
+      clearBtn: true
+    })
+
+    $('#tgl_lahir_div').datepicker({
+      autoclose: true,
+      format: "mm/dd/yyyy",
+      clearBtn: true
+    })
+  });
+</script>
 @endsection

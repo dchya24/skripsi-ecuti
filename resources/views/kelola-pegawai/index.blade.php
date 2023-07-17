@@ -1,14 +1,6 @@
 @extends('template.app')
-@section('title', 'Approval')
+@section('title', 'Pegawai')
 @section('content')
-  @if(session('session'))
-  <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
-    {{session('session')['message']}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
   @if(session('session'))
   <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
     {{session('session')['message']}}
@@ -38,7 +30,7 @@
           <select class="form-control w-100" name="subbagian_id" id="">
               <option value="">Subbagian/Seksi</option>
               @foreach ($subbagian as $item)
-                <option value="{{$item->id}}">{{$item->nama}}</option>
+                <option value="{{$item->id}}">{{$item->nama}} - {{$item->bagian->nama}}</option>
               @endforeach
           </select>
         </div>

@@ -66,7 +66,7 @@
 
   <div class="mt-2 py-2">
     <h6 class="py-3 border-bottom">Form Perizinan</h6>
-    <form class="pt-4" method="POST" action="{{route('cuti.add.action')}}">
+  <form class="pt-4" method="POST" action="{{route('cuti.add.action')}}" enctype="multipart/form-data">
       <div class="form-group row">
         <label for="jenis_cuti" class="col-md-2 col-form-label">Jenis Cuti</label>
         <div class="col-md-8">
@@ -90,7 +90,7 @@
         <label for="bukti" class="col-md-2 col-form-label">Bukti</label>
         <div class="col-md-8">
           <div class="custom-file">
-            <input type="file" class="custom-file-input" id="bukti" name="bukti">
+            <input type="file" class="custom-file-input" id="bukti" name="bukti" accept="image/*|.pdf">
             <label class="custom-file-label" for="bukti">Choose file</label>
           </div>
           <small id="passwordHelpInline" class="text-muted">

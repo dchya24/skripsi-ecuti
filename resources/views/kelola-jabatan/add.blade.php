@@ -1,14 +1,6 @@
 @extends('template.app')
-@section('title', 'Approval')
+@section('title', 'Jabatan')
 @section('content')
-  @if(session('session'))
-  <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
-    {{session('session')['message']}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
   @if(session('session'))
   <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
     {{session('session')['message']}}

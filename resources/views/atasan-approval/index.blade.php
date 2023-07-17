@@ -13,17 +13,19 @@
   <h5>Pertimbangan Atasan Langsung</h5>
 
   <form method="GET" class="form-inline">
-    <select name="" id="" class="form-control mr-1">
-      <option value="">Jenis Cuti</option>
+    <select name="jenis_cuti" id="" class="form-control mr-1">
+      <option value="all">Jenis Cuti</option>
+      <option value="all">Semua</option>
       @foreach ($optionsJenisCuti as $key => $option)
           <option value="{{$key}}">{{$option}}</option>
       @endforeach
     </select>
 
     <select name="status_atasan" class="form-control mx-1">
-      <option value="">Status Atasan</option>
+      <option value="all">Status Atasan</option>
+      <option value="all">Semua</option>
       @foreach ($statusCutiOptions as $key => $option)
-          <option value="{{$key}}">{{$option}}</option>
+          <option value="{{$key}}" <?php echo ($key == 99) ? '': ''; ?>>{{$option}}</option>
       @endforeach
     </select>
 
@@ -81,5 +83,6 @@
       @endforelse
     </tbody>
   </table>
+  {{$data->onEachSide(10)->links()}}
   
 @endsection

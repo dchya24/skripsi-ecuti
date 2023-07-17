@@ -9,14 +9,7 @@
     </button>
   </div>
   @endif
-  @if(session('session'))
-  <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
-    {{session('session')['message']}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
+
   <h5>
     <a href="{{route('keputusan.index')}}" class="btn btn-outline-secondary btn-sm">
       <i class="fas fa-arrow-left"></i>
@@ -88,7 +81,7 @@
         <label for="bukti" class="col-md-2 col-form-label">Bukti</label>
         <div class="col-md-8 col-form-label">
           @if($data->bukti)
-          : <a href="" class="btn btn-outline-primary">Lihat Bukti</a>
+          : <a href="{{asset($data->bukti)}}" class="btn btn-sm btn-outline-primary">Lihat Bukti</a>
           @else
           : Tidak ada Bukti
           @endif
@@ -165,7 +158,7 @@
           @if($data->status_keputusan_pejabat_berwenang != 99)
             : {{$data->alasan_keputusan_pejabat_berwenang}}
           @else
-            <textarea class="form-control" id="alasan_keputusan" rows="3" name="alasan_keputusan" required></textarea>
+            <textarea class="form-control" id="alasan_keputusan" rows="3" name="alasan_keputusan"></textarea>
           @endif
         </div>
       </div>

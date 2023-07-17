@@ -64,7 +64,7 @@
                 <li @if($sidebar_submenu === 'approval.atasan') class="active" @endif>
                   <a href="{{route('approval.index')}}">Pertimbangan Atasan</a>
                 </li>
-                @if(!isPejabatBerwenang(Auth::user()->jabatan))
+                @if(isPejabatBerwenang(Auth::user()->jabatan))
                   <li @if($sidebar_submenu === 'approval.pejabat') class="active" @endif>
                     <a href="{{route('keputusan.index')}}">Keputusan Pejabat</a>
                   </li>

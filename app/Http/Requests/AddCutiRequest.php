@@ -26,6 +26,7 @@ class AddCutiRequest extends FormRequest
         return [
             'jenis_cuti_id' => "required",
             'alasan_cuti' => "required",
+            'bukti' => 'mimes:pdf,png,jpeg,jpg',
             'mulai_cuti' => 'required',
             'akhir_cuti' => 'required',
             'alamat' => 'required',
@@ -40,7 +41,8 @@ class AddCutiRequest extends FormRequest
             "start_date.required" => "Tanggal Mulai tidak boleh kosong!",
             "end_date.required" => "Tanggal Akhir tidak boleh kosong!",
             "alamat.required" => "Alasan Tidak boleh kosong!",
-            "no_telp.required" => "Nomor Telepon tidak boleh kosong!"
+            "no_telp.required" => "Nomor Telepon tidak boleh kosong!",
+            "bukti.mimes" => "File bukti harus berformat pdf, png, jpg, jpeg!"
         ];
     }
 }

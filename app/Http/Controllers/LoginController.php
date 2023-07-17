@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 class LoginController extends Controller
 {
     public function loginView(){
-        return $this->view('auth.login');
+        return view('auth.login');
     }
 
     public function login(Request $request){

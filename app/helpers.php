@@ -55,3 +55,52 @@ if(!function_exists('isPejabatBerwenang')){
     return false;
   }
 }
+
+if(!function_exists('getStatusPerizinanCuti')){
+  function getStatusPerizinanCuti($statusAtasan, $statusPejabat){
+    $class = StatusCuti::STYLE[$statusAtasan];
+    $message = "";
+
+    if($statusAtasan == StatusCuti::PROSES){
+      $message = "Sedang diproses oleh Atasan Langsung";
+    }
+    else if($statusAtasan == StatusCuti::DITANGGUHKAN){
+      $message = "Ditangguhkan oleh Atasan Langsung";
+    }
+    else if($statusAtasan == StatusCuti::TIDAK_DISETUJUI){
+      $message = "Ditolak oleh Atasan Langsung";
+    }
+    else if($statusAtasan == StatusCuti::PERUBAHAN){
+      $message = "Perubahan oleh Atasan Langsung";
+    }
+    else if($statusAtasan == StatusCuti::DISETUJUI){
+      $message = "Disetujui oleh Atasan Langsung";
+    }
+
+    if($statusPejabat == StatusCuti::PROSES){
+      $message = "Sedang diproses oleh Pejabat Berwenang";
+      $class = StatusCuti::STYLE[$statusPejabat];
+    }
+    else if($statusPejabat == StatusCuti::DITANGGUHKAN){
+      $class = StatusCuti::STYLE[$statusPejabat];
+      $message = "Ditangguhkan oleh Pejabat Berwenang";
+    }
+    else if($statusPejabat == StatusCuti::TIDAK_DISETUJUI){
+      $class = StatusCuti::STYLE[$statusPejabat];
+      $message = "Ditolak oleh Pejabat Berwenang";
+    }
+    else if($statusPejabat == StatusCuti::PERUBAHAN){
+      $class = StatusCuti::STYLE[$statusPejabat];
+      $message = "Perubahan oleh Pejabat Berwenang";
+    }
+    else if($statusPejabat == StatusCuti::DISETUJUI){
+      $class = StatusCuti::STYLE[$statusPejabat];
+      $message = "Disetujui oleh Pejabat Berwenang";
+    }
+
+    return [
+      'style' => $class,
+      'message' => $message
+    ];
+  }
+}

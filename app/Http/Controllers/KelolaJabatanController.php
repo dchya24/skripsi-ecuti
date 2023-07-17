@@ -50,7 +50,10 @@ class KelolaJabatanController extends Controller
         $data = $request->except('_token');
         $user = jabatan::create($data);
 
-        return redirect()->route('jabatan.index');
+        return redirect()->route('jabatan.index')->with("session", [
+            'status' => 'success',
+            'message' => "Berhasil menambahkan data jabatan baru!"
+        ]);;
     }
 
     /**
@@ -94,9 +97,12 @@ class KelolaJabatanController extends Controller
     {
         $data = $request->except(['_token', '_method']);
 
-        Jabatan::where('id', $id)->update($data);
+        jabatan::where('id', $id)->update($data);
 
-        return redirect()->back();
+        return redirect()->back()->with("session", [
+            'status' => 'success',
+            'message' => "Data jabatan berhasil diubah!"
+        ]);;
     }
 
     /**
@@ -110,9 +116,12 @@ class KelolaJabatanController extends Controller
         $user = User::where('jabatan_id', $id)->update([
             'jabatan_id' => null
         ]);
-        Jabatan::destroy($id);
+        jabatan::destroy($id);
 
-        return redirect()->route('jabatan.index');
+        return redirect()->route('jabatan.index')->with("session", [
+            'status' => 'success',
+            'message' => "Data jabatan berhasil dihapus!"
+        ]);;
 
     }
 }
