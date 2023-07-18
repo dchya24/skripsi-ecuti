@@ -103,10 +103,10 @@ class CutiController extends Controller
         }
         else if($jenis_cuti == JenisCuti::CUTI_ALASAN_PENTING){
             $cutiAlasanPenting = PerizinanCuti::where('jenis_cuti_id', JenisCuti::CUTI_ALASAN_PENTING)
-                        ->whereYear('created_at', now()->year)
+                        ->whereMonth('created_at', now()->month)
                         ->where('user_id', $user->id)->count();
             
-            if($cutiAlasanPenting > 1){
+            if($cutiAlasanPenting >= 1){
                 return redirect()->back()->with("session", [
                     'status' => 'danger',
                     'message' => "Anda sudah menggunakan cuti alasan penting!"
