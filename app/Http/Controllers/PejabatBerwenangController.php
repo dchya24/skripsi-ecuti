@@ -124,7 +124,7 @@ class PejabatBerwenangController extends Controller
                     if($item->sisa_cuti_tahunan < $sisa && $sisa > 0){
                         $temp = $item->sisa_cuti_tahunan - $item->sisa_cuti_tahunan;
                         $sisa = $sisa - $item->sisa_cuti_tahunan;
-                        $item->cuti_tahunan_terpakai = $item->cuti_tahunan_terpakai + $temp;
+                        $item->cuti_tahunan_terpakai = $item->cuti_tahunan_terpakai + $$item->sisa_cuti_tahunan;
                         $item->sisa_cuti_tahunan = $temp;
                         
                     }
