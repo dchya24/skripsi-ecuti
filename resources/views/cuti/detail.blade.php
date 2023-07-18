@@ -163,7 +163,7 @@
         </div>
       </div>
 
-      <div class="form-group row">
+      {{-- <div class="form-group row">
         <div class="col-md-10 text-right">
           @if($data->status_persetujuan_atasan_langsung == 99)
             @csrf
@@ -174,7 +174,7 @@
             </button>
           @endif
         </div>
-      </div>
+      </div> --}}
 
     </form>
   </div>
