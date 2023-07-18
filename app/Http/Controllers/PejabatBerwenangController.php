@@ -6,9 +6,12 @@ use App\Enums\JenisCuti;
 use App\Enums\StatusCuti;
 use App\Models\CatatanCuti;
 use App\Models\PerizinanCuti;
+use App\Models\User;
 use App\Service\GlobalService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 
 class PejabatBerwenangController extends Controller
 {
@@ -56,6 +59,7 @@ class PejabatBerwenangController extends Controller
     }
 
     public function keputusanCuti(Request $request){
+        DB::beginTransaction();
         $data = [
             "status_keputusan_pejabat_berwenang" => $request->status,
             "alasan_keputusan_pejabat_berwenang" => $request->alasan_keputusan
@@ -66,12 +70,14 @@ class PejabatBerwenangController extends Controller
         $result = self::approvalCuti($cuti, $data);
 
         if(!$result){
+            DB::rollBack();
             return redirect()->back()->with('session', [
                 'status' => 'danger', 
                 'message' => 'Gagal memberikan keputusan cuti pegawai!'
             ]);
         }
 
+        DB::commit();
         return redirect()->back()->with('session', [
             'status' => 'success', 
             'message' => 'Berhasil memberikan keputusan cuti pegawai!'
@@ -83,13 +89,54 @@ class PejabatBerwenangController extends Controller
         $cuti->alasan_keputusan_pejabat_berwenang = $persetujuan['alasan_keputusan_pejabat_berwenang'];
         $cuti->save();
 
+        $fileName = 'form-cuti-'. $cuti->id . '.pdf';
+        $path = public_path('form/' . $fileName);
+        if(file_exists($path)){
+            unlink($path);
+        }
+
+        $userData = User::with(['jabatan', 'jabatan.subbagian'])->where('id', $cuti->user_id)->first();
+        $historiCuti = CatatanCuti::where('user_id', $userData->id)
+            ->orderBy('created_at', 'desc')->limit(3)->get();
+
+        // dd($historiCuti);
+        // return view('cuti.print');
+        $pdf = Pdf::loadView('cuti.print', [
+            'userData' => $userData,
+            'perizinanCuti' => $cuti,
+            'historiCuti' => $historiCuti,
+            'statusCuti' => StatusCuti::PRINT_PREVIEW, 
+            'jenisCuti' => JenisCuti::array, 
+        ])->setPaper('a4');
+        $pdf->save(public_path('form/' . $fileName));
+
         if($cuti->status_keputusan_pejabat_berwenang == StatusCuti::DISETUJUI){
             $catatanCuti = CatatanCuti::where('user_id',$cuti->user_id)
                 ->where('tahun', now()->year)->first();
 
             if($cuti->jenis_cuti_id == JenisCuti::CUTI_TAHUNAN){
-                $catatanCuti->sisa_cuti_tahunan = $catatanCuti->sisa_cuti_tahunan  - $cuti->jumlah_hari;
-                $catatanCuti->cuti_tahunan_terpakai = $catatanCuti->cuti_tahunan_terpakai  + $cuti->jumlah_hari;
+                // $catatanCuti->sisa_cuti_tahunan = $catatanCuti->sisa_cuti_tahunan  - $cuti->jumlah_hari;
+                // $catatanCuti->cuti_tahunan_terpakai = $catatanCuti->cuti_tahunan_terpakai  + $cuti->jumlah_hari;
+                $total = $cuti->jumlah_hari;
+                $sisa = $total;
+                $cct = GlobalService::getCutiHistories($cuti->user_id);
+                foreach($cct as $key => $item){
+                    if($item->sisa_cuti_tahunan < $sisa && $sisa > 0){
+                        $temp = $item->sisa_cuti_tahunan - $item->sisa_cuti_tahunan;
+                        $sisa = $sisa - $item->sisa_cuti_tahunan;
+                        $item->cuti_tahunan_terpakai = $item->cuti_tahunan_terpakai + $temp;
+                        $item->sisa_cuti_tahunan = $temp;
+                        
+                    }
+                    else if($item->sisa_cuti_tahunan > $sisa && $sisa > 0){
+                        $temp =  $item->sisa_cuti_tahunan - $sisa;
+                        $item->sisa_cuti_tahunan = $temp;
+                        $item->cuti_tahunan_terpakai = $item->cuti_tahunan_terpakai + $sisa;
+                        $sisa = $sisa - $sisa;
+                    }
+                    $item->save();
+                }
+                // dd($cct);
             }
             else if($cuti->jenis_cuti_id == JenisCuti::CUTI_ALASAN_PENTING){
                 $catatanCuti->jumlah_alasan_penting = $catatanCuti->jumlah_alasan_penting + $cuti->jumlah_hari;

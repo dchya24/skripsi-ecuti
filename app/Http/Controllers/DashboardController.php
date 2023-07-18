@@ -18,6 +18,7 @@ class DashboardController extends Controller
         // dd($dataJabatan);
 
         $catatanCuti = GlobalService::getCutiHistories($user->id);
+
         $atasanLangsung = $dataJabatan['atasan_langsung'] ? $dataJabatan['atasan_langsung'] : null; 
         $pejabatBerwenang = $dataJabatan['pejabat_berwenang'] ? $dataJabatan['pejabat_berwenang'] : null;
 

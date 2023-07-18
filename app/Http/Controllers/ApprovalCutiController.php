@@ -6,9 +6,11 @@ use App\Enums\JenisCuti;
 use App\Enums\StatusCuti;
 use App\Models\CatatanCuti;
 use App\Models\PerizinanCuti;
+use App\Models\User;
 use App\Service\GlobalService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ApprovalCutiController extends Controller
 {
@@ -75,9 +77,30 @@ class ApprovalCutiController extends Controller
             $perizinan->status_keputusan_pejabat_berwenang = StatusCuti::PROSES;
         }
 
+        $fileName = 'form-cuti-'. $perizinan->id . '.pdf';
+        $path = public_path('form/' . $fileName);
+        if(file_exists($path)){
+            unlink($path);
+        }
+
+        $userData = User::with(['jabatan', 'jabatan.subbagian'])->where('id', $perizinan->user_id)->first();
+        $historiCuti = CatatanCuti::where('user_id', $userData->id)
+            ->orderBy('created_at', 'desc')->limit(3)->get();
+
+        // dd($historiCuti);
+        // return view('cuti.print');
+        $pdf = Pdf::loadView('cuti.print', [
+            'userData' => $userData,
+            'perizinanCuti' => $perizinan,
+            'historiCuti' => $historiCuti,
+            'statusCuti' => StatusCuti::PRINT_PREVIEW, 
+            'jenisCuti' => JenisCuti::array, 
+        ])->setPaper('a4');
+        $pdf->save(public_path('form/' . $fileName));
+
         $perizinan->save();
 
-        // return redirect()->back()->with('success', 'Berhasil memberikan pertimbangan cuti pegawai!');
+        
         return redirect()->back()->with("session", [
             'status' => 'success',
             'message' => "Berhasil memberikan pertimbangan cuti pegawai!"

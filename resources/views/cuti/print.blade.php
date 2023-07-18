@@ -254,7 +254,7 @@
       @foreach($statusCuti as $status)
         <td>
           @if($perizinanCuti->status_keputusan_pejabat_berwenang == $status)
-            {{$perizinanCuti->alasan_keputusan_pejabat_berwenang}}
+            {{($perizinanCuti->alasan_keputusan_pejabat_berwenang) ?  $perizinanCuti->alasan_keputusan_pejabat_berwenang : 'V'}}
           @elseif(!$perizinanCuti->status_keputusan_pejabat_berwenang ||$perizinanCuti->status_keputusan_pejabat_berwenang == 99)
             <span style="color: white">a</span>
           @endif
