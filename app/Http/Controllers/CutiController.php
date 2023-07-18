@@ -19,10 +19,26 @@ use Illuminate\Support\Facades\Auth;
 
 class CutiController extends Controller
 {
-    public function index(){
-        $perizinanCuti = PerizinanCuti::where('user_id', Auth()->user()->id)
-            ->orderBy('created_at', 'desc')->get();
+    public function index(Request $request){
+        $perizinanCuti = PerizinanCuti::where('user_id', Auth()->user()->id);
 
+        $filterStatusPejabat = $request->query('status_pejabat');
+        $filterStatusAtasan = $request->query('status_atasan');
+        $filterJenisCuti = $request->query('jenis_cuti');
+
+        if(!empty($filterStatusPejabat) && $filterStatusPejabat !== 'all'){
+            $perizinanCuti = $perizinanCuti->where('status_keputusan_pejabat_berwenang', $filterStatusAtasan);
+        }
+
+        if(!empty($filterStatusAtasan) && $filterStatusAtasan !== 'all'){
+            $perizinanCuti = $perizinanCuti->where('status_persetujuan_atasan_langsung', $filterStatusAtasan);
+        }
+
+        if(!empty($filterJenisCuti) && $filterJenisCuti !== 'all'){
+            $perizinanCuti = $perizinanCuti->where('jenis_cuti_id', $filterJenisCuti);
+        }
+
+        $perizinanCuti = $perizinanCuti->orderBy('created_at', 'desc')->get();
         return $this->view('cuti.index', [
             'riwayat_cuti' => $perizinanCuti,
             'optionsJenisCuti' => JenisCuti::OPTIONS,

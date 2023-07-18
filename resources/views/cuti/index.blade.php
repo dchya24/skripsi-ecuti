@@ -9,36 +9,28 @@
     </button>
   </div>
   @endif
-  @if(session('session'))
-  <div class="alert alert-{{session('session')['status']}} alert-dismissible fade show" role="alert">
-    {{session('session')['message']}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
 
   <h5>
     Perizinan Cuti
   </h5>
 
   <form method="GET" class="form-inline">
-    <select name="" id="" class="form-control mr-1">
-      <option value="">Jenis Cuti</option>
+    <select name="jenis_cuti" id="" class="form-control mr-1">
+      <option value="all">Jenis Cuti</option>
       @foreach ($optionsJenisCuti as $key => $option)
           <option value="{{$key}}">{{$option}}</option>
       @endforeach
     </select>
 
     <select name="status_atasan" class="form-control mx-1">
-      <option value="">Status Atasan</option>
+      <option value="all">Status Atasan</option>
       @foreach ($statusCutiOptions as $key => $option)
           <option value="{{$key}}">{{$option}}</option>
       @endforeach
     </select>
     
     <select name="status_pejabat" class="form-control mx-1">
-      <option value="">Status Pejabat</option>
+      <option value="all">Status Pejabat</option>
       @foreach ($statusCutiOptions as $key => $option)
           <option value="{{$key}}">{{$option}}</option>
       @endforeach
