@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::get('/dashboard', [DashboardController::class, 'dashboardPage'])->name('dashboard');
+    Route::post('/profile', [DashboardController::class, 'changePassword'])->name('profile.password');
+    Route::get('/profile', [DashboardController::class, 'profilePage'])->name('profile');
     Route::prefix('cuti')->group(function(){
         Route::get("", [CutiController::class, "index"])->name('cuti.index');
         Route::get("/detail/{id}", [CutiController::class, "show"])->name('cuti.show');

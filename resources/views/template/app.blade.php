@@ -29,6 +29,8 @@
           <div class="dropdown-item">
             Hello, {{Auth::user()->nama}}
           </div>
+          <div class="dropdown-divider"></div>
+          <a href="{{route('profile')}}" class="dropdown-item">Profile</a>
 
           @if($notification)
             <?php $dataNotif =  getStatusPerizinanCuti($notification->status_persetujuan_atasan_langsung, $notification->status_keputusan_pejabat_berwenang); ?>
